@@ -6,6 +6,7 @@ from .serializer import (
     MatriculasSerializer,
     ListaMatriculasAlunoSerializer,
     ListaAlunosMatriculadosCursoSerializer,
+    AlunosSerializerV2,
 )
 
 
@@ -13,9 +14,14 @@ class AlunosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os alunos e alunas"""
 
     queryset = Aluno.objects.all()
-    serializer_class = AlunosSerializer
     authentication_classes = [authentication.BasicAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.request.version == "v2":
+            return AlunosSerializerV2
+        else:
+            return AlunosSerializer
 
 
 class CursosViewSet(viewsets.ModelViewSet):
