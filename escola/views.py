@@ -1,4 +1,4 @@
-from rest_framework import viewsets, generics, authentication, permissions
+from rest_framework import viewsets, generics, authentication
 from .models import Aluno, Curso, Matricula
 from .serializer import (
     AlunosSerializer,
@@ -14,8 +14,6 @@ class AlunosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os alunos e alunas"""
 
     queryset = Aluno.objects.all()
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         if self.request.version == "v2":
@@ -29,8 +27,6 @@ class CursosViewSet(viewsets.ModelViewSet):
 
     queryset = Curso.objects.all()
     serializer_class = CursosSerializer
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
 
 
 class MatriculasViewSet(viewsets.ModelViewSet):
@@ -38,8 +34,12 @@ class MatriculasViewSet(viewsets.ModelViewSet):
 
     queryset = Matricula.objects.all()
     serializer_class = MatriculasSerializer
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = [
+        "get",
+        "post",
+        "put",
+        "patch",
+    ]
 
 
 class ListaMatriculasAluno(generics.ListAPIView):
@@ -53,8 +53,6 @@ class ListaMatriculasAluno(generics.ListAPIView):
         return queryset
 
     serializer_class = ListaMatriculasAlunoSerializer
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
 
 
 class ListaAlunosMatriculadosCurso(generics.ListAPIView):
@@ -65,5 +63,3 @@ class ListaAlunosMatriculadosCurso(generics.ListAPIView):
         return queryset
 
     serializer_class = ListaAlunosMatriculadosCursoSerializer
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
