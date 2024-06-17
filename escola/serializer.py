@@ -13,6 +13,7 @@ class AlunosSerializer(serializers.ModelSerializer):
             "rg",
             "cpf",
             "data_nascimento",
+            "foto",
         ]
 
 
@@ -58,4 +59,5 @@ class AlunosSerializerV2(serializers.ModelSerializer):
             "rg",
             "cpf",
             "data_nascimento",
+            "foto",
         ]
