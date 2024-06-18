@@ -18,8 +18,21 @@ router.register("cursos", CursosViewSet, basename="Cursos")
 router.register("matriculas", MatriculasViewSet, basename="Matriculas")
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path(
+        "admin/",
+        include(
+            "admin_honeypot.urls",
+            namespace="admin_honeypot",
+        ),
+    ),
+    path("controle-geral-app-admin/", admin.site.urls),
     path("", include(router.urls)),
-    path("alunos/<int:pk>/matriculas/", ListaMatriculasAluno.as_view()),
-    path("cursos/<int:pk>/matriculas/", ListaAlunosMatriculadosCurso.as_view()),
+    path(
+        "alunos/<int:pk>/matriculas/",
+        ListaMatriculasAluno.as_view(),
+    ),
+    path(
+        "cursos/<int:pk>/matriculas/",
+        ListaAlunosMatriculadosCurso.as_view(),
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
